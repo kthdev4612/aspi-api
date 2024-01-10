@@ -7,9 +7,10 @@ from config.constant import *
 from models.aspci_base import *
 from resources.users import UsersApi
 from resources.reports import ReportsApi
-
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 app.secret_key = os.urandom(24)
 app.config['DEBUG'] = True
@@ -34,6 +35,7 @@ def home():
 
 api.add_resource(UsersApi, '/api/user/<string:route>', endpoint='all_user', methods=['GET', 'POST', 'DELETE', 'PATCH'])
 api.add_resource(ReportsApi, '/api/report/<string:route>', endpoint='all_report', methods=['GET', 'POST', 'DELETE', 'PATCH'])
+
 
 if __name__ == '__main__':
     app.run(debug=True,  host="0.0.0.0")

@@ -17,6 +17,7 @@ def CreateUser():
         #les variable qui permet de recuperer les infomation de l'utilisateur 
         firstname = request.json.get('firstname')
         lastname = request.json.get('lastname')
+        username = request.json.get('username')
         email = request.json.get('email')
         password = request.json.get('password')
         date_of_birth = request.json.get('date_of_birth')
@@ -26,6 +27,7 @@ def CreateUser():
         parents_name = request.json.get('parents_name')
         parents_number = request.json.get('parents_number')
         id = str(uuid.uuid4())
+        matricule = "ASPCI_" + str(uuid.uuid4()).upper().replace('-', '')[:4]
 
 
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
@@ -38,6 +40,7 @@ def CreateUser():
         #initialisation de chaque colonne de la classe par les variables interne
         new_users.u_firstname = firstname
         new_users.u_lastname = lastname
+        new_users.u_username = username
         new_users.u_email = email
         new_users.u_password = hashed_password
         new_users.u_date_of_birth = date_of_birth
@@ -47,6 +50,7 @@ def CreateUser():
         new_users.u_parents_name = parents_name
         new_users.u_parents_number = parents_number
         new_users.u_uid = id
+        new_users.u_matricule = matricule
 
         
           # Ajouter l'instance à la session et la sauvegarder dans la base de données
@@ -125,9 +129,9 @@ def DeleteUser():
     response = {}
 
     try:
-        id = request.json.get('u_uid')
+        # id = request.json.get('u_uid')
         # Rechercher l'utilisateur à supprimer dans la base de données en fonction de l'ID
-        deleted_user = Users.query.filter_by(user_uid=id).first()
+        deleted_user = Users.query.filter_by(u_uid=Users.u_uid).first()
 
         if deleted_user:
             # Supprimer l'utilisateur de la base de données
@@ -135,14 +139,14 @@ def DeleteUser():
                 db.session.delete(deleted_user)
                 db.session.commit()
                 response['status'] = 'success'
-                response['message'] = f"Utilisateur avec l'ID {id} supprimé avec succès!"
+                response['message'] = f"Utilisateur avec l'ID {deleted_user.u_uid} supprimé avec succès!"
             except Exception as e:
                 db.session.rollback()
                 response['status'] = 'error'
                 response['error_description'] = str(e)
         else:
             response['status'] = 'error'
-            response['message'] = f"Utilisateur avec l'ID {id} non trouvé."
+            response['message'] = f"Utilisateur avec l'ID {deleted_user.u_uid} non trouvé."
 
     except Exception as e:
         response['status'] = 'error'
@@ -166,9 +170,11 @@ def GetUsers():
             # Parcourir tous les utilisateurs pour récupérer leurs informations
             for user in all_users:
                 user_info = {
+                    'user_id': user.id,
                     'user_uid': user.u_uid,
                     'firstname': user.u_firstname,
                     'lastname': user.u_lastname,
+                    'username': user.u_username,
                     'email': user.u_email,
                     'date_of_birth': user.u_date_of_birth,
                     'place_of_birth': user.u_place_of_birth,
@@ -176,12 +182,13 @@ def GetUsers():
                     'function' : user.u_function,
                     'parents_name' : user.u_parents_name,
                     'parents_number' : user.u_parents_number,
+                    'matricule' : user.u_matricule,
                     # ... Ajoutez d'autres informations d'utilisateur si nécessaire
                 }
                 users_information.append(user_info)
 
             response['status'] = 'success'
-            response ['users'] = users_information
+            response ['result'] = users_information
         else:
             response['status'] = 'error'
             response['message'] = 'Aucun utilisateur trouvé dans la base de données.'

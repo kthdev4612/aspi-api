@@ -9,11 +9,13 @@ class UsersApi(Resource):
     def post(self, route):
         if route == "CreateUser":
             return CreateUser()
-
-
-    def delete(self, route):
+        
         if route == "DeletedUser":
             return DeleteUser()
+
+    # def delete(self, route):
+    #     if route == "DeletedUser":
+    #         return DeleteUser()
     
 
     def patch(self, route):
