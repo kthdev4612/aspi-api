@@ -77,12 +77,13 @@ def UpdateUser():
 
     try:
         # Récupérer l'utilisateur à mettre à jour depuis la base de données en fonction de l'ID
-        update_user = Users.query.filter_by(u_uid='ee15fb98-ebea-42e0-be04-ca63220af58c').first()
+        update_user = Users.query.filter_by(u_uid=Users.u_uid).first()
 
         if update_user:
             # Récupérer les nouvelles informations de l'utilisateur depuis la requête JSON
             firstname = request.json.get('firstname')
             lastname = request.json.get('lastname')
+            username = request.json.get('username')
             email = request.json.get('email')
             date_of_birth = request.json.get('date_of_birth')
             place_of_birth = request.json.get('place_of_birth')
@@ -94,6 +95,7 @@ def UpdateUser():
             # Mettre à jour les informations de l'utilisateur avec les nouvelles données
             update_user.u_firstname = firstname
             update_user.u_lastname = lastname
+            update_user.u_username = username
             update_user.u_email = email
             update_user.u_date_of_birth = date_of_birth
             update_user.u_place_of_birth = place_of_birth
@@ -213,9 +215,11 @@ def GetSingleUser():
         if user:
             # Créer un dictionnaire pour stocker les informations de l'utilisateur
             user_info = {
+                'user_id': user.id,
                 'user_uid': user.u_uid,
                 'firstname': user.u_firstname,
                 'lastname': user.u_lastname,
+                'username': user.u_username,
                 'email': user.u_email,
                 'date_of_birth': user.u_date_of_birth,
                 'place_of_birth': user.u_place_of_birth,
@@ -223,11 +227,13 @@ def GetSingleUser():
                 'function' : user.u_function,
                 'parents_name' : user.u_parents_name,
                 'parents_number' : user.u_parents_number,
+                'matricule' : user.u_matricule,
+
                 # ... Ajoutez d'autres informations d'utilisateur si nécessaire
             }
 
             response['status'] = 'success'
-            response['user'] = user_info
+            response['result'] = user_info
         else:
             response['status'] = 'erreur'
             response['message'] = f"Aucun utilisateur trouvé avec l'ID suivant: {id}."

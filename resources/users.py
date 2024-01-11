@@ -12,20 +12,25 @@ class UsersApi(Resource):
         
         if route == "DeletedUser":
             return DeleteUser()
+        
+        if route == 'GetSingleUser':
+            return GetSingleUser()
+        
+        if route == "Updateuser":
+            return UpdateUser()
 
     # def delete(self, route):
     #     if route == "DeletedUser":
     #         return DeleteUser()
     
 
-    def patch(self, route):
-        if route == "Updateuser":
-            return UpdateUser()
+    # def patch(self, route):
+    #     if route == "Updateuser":
+    #         return UpdateUser()
 
 
     def get(self, route):
         if route == "GetAllUsers":
             return GetUsers()
         
-        if route == 'GetSingleUser':
-            return GetSingleUser()
+        
