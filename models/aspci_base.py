@@ -29,3 +29,18 @@ class Reports(db.Model):
     r_comment = db.Column(db.String(255), nullable=False)
     creation_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
     update_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
+
+class Admin(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    a_firstname = db.Column(db.String(128), nullable=False)
+    a_lastname = db.Column(db.String(128), nullable=False)
+    a_username = db.Column(db.String(128), nullable=False)
+    a_email = db.Column(db.String(128), nullable=False)
+    a_password = db.Column(db.String(128), nullable=False)
+    a_number = db.Column(db.String(128), nullable=False)
+    a_role = db.Column(db.String(128), nullable=False)
+    a_country = db.Column(db.String(128), nullable=False)
+    # a_matricule = db.Column(db.String(128), nullable=False)
+    a_uid = db.Column(db.String(128))
+    creation_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
+    update_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
