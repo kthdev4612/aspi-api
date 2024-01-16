@@ -5,16 +5,15 @@ from models.aspci_base import Admin
 from flask import jsonify  
 import uuid
 import bcrypt
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
-#la fonction qui permet de de creer un utilisateur 
 def CreateUser():
 
     reponse = {}
 
     try:
 
-        #les variable qui permet de recuperer les infomation de l'utilisateur 
         firstname = request.json.get('firstname')
         lastname = request.json.get('lastname')
         username = request.json.get('username')
@@ -27,14 +26,15 @@ def CreateUser():
         # matricule = "ASPCI_" + str(uuid.uuid4()).upper().replace('-', '')[:4]
 
 
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        # hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-    
-        #nouvelle instance de la classe user qui se trouve dans le dossier model
+        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+
+
+
         new_admin = Admin()
 
 
-        #initialisation de chaque colonne de la classe par les variables interne
         new_admin.a_firstname = firstname
         new_admin.a_lastname = lastname
         new_admin.a_username = username
@@ -46,10 +46,7 @@ def CreateUser():
         new_admin.a_uid = id
         # new_users.u_matricule = matricule
 
-        
-          # Ajouter l'instance à la session et la sauvegarder dans la base de données
         try:
-            #ajout de toutes les informations de l'utilisateur dans la base de donnée
             db.session.add(new_admin)
             db.session.commit()
             print("Les informations de l'admin a été enregistrées avec succès !")
@@ -58,6 +55,40 @@ def CreateUser():
             print(f"Une erreur s'est produite : {str(e)}")
 
         reponse['satus'] = 'success'
+
+    except Exception as e:
+        reponse['error_description'] = str(e)
+        reponse['status'] = 'error'
+
+    return reponse
+
+
+
+
+def Login():
+    reponse = {}
+
+    try:
+        username = request.json.get('username')
+        password = request.json.get('password')
+
+        admin = Admin.query.filter_by(a_username=username).first()
+
+        if check_password_hash(admin.a_password, password):
+            reponse['status'] = 'success'
+            reponse['result'] = {
+                'id': admin.a_uid,
+                'firstname': admin.a_firstname,
+                'lastname': admin.a_lastname,
+                'email': admin.a_email,
+                'number': admin.a_number,
+                'role': admin.a_role,
+                'username': admin.a_username
+            }
+
+        else:
+            reponse['status'] = 'error'
+            reponse['error_description'] = 'Nom d\'utilisateur ou mot de passe incorrect.'
 
     except Exception as e:
         reponse['error_description'] = str(e)
