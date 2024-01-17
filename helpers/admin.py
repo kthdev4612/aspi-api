@@ -22,15 +22,9 @@ def CreateUser():
         number = request.json.get('number')
         role = request.json.get('role')
         country = request.json.get('country')
+        image = request.json.get('image')
         id = str(uuid.uuid4())
-        # matricule = "ASPCI_" + str(uuid.uuid4()).upper().replace('-', '')[:4]
-
-
-        # hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-
         hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
-
-
 
         new_admin = Admin()
 
@@ -44,7 +38,9 @@ def CreateUser():
         new_admin.a_role = role
         new_admin.a_country = country
         new_admin.a_uid = id
-        # new_users.u_matricule = matricule
+        new_admin.a_image_data = image
+
+
 
         try:
             db.session.add(new_admin)
@@ -83,7 +79,8 @@ def Login():
                 'email': admin.a_email,
                 'number': admin.a_number,
                 'role': admin.a_role,
-                'username': admin.a_username
+                'username': admin.a_username,
+                'image': admin.a_image_data,
             }
 
         else:

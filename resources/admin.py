@@ -11,3 +11,4 @@ class AdminApi(Resource):
             return CreateUser()
         if route == "Login":
             return Login()
+            

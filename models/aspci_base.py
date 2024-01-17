@@ -40,7 +40,7 @@ class Admin(db.Model):
     a_number = db.Column(db.String(128), nullable=False)
     a_role = db.Column(db.String(128), nullable=False)
     a_country = db.Column(db.String(128), nullable=False)
-    # a_matricule = db.Column(db.String(128), nullable=False)
+    a_image_data = db.Column(db.String(128), nullable=False)
     a_uid = db.Column(db.String(128))
     creation_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
     update_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
