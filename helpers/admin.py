@@ -70,7 +70,7 @@ def Login():
 
         admin = Admin.query.filter_by(a_username=username).first()
 
-        if check_password_hash(admin.a_password, password):
+        if admin and check_password_hash(admin.a_password, password):
             reponse['status'] = 'success'
             reponse['result'] = {
                 'id': admin.a_uid,
