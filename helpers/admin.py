@@ -22,8 +22,8 @@ def CreateUser():
         number = request.json.get('number')
         role = request.json.get('role')
         country = request.json.get('country')
-        image = request.json.get('image')
         id = str(uuid.uuid4())
+        matricule = "ASPCI_" + str(uuid.uuid4()).upper().replace('-', '')[:4]
         hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
 
         new_admin = Admin()
@@ -38,7 +38,7 @@ def CreateUser():
         new_admin.a_role = role
         new_admin.a_country = country
         new_admin.a_uid = id
-        new_admin.a_image_data = image
+        new_admin.a_matricule = matricule
 
 
 
@@ -80,7 +80,7 @@ def Login():
                 'number': admin.a_number,
                 'role': admin.a_role,
                 'username': admin.a_username,
-                'image': admin.a_image_data,
+                'matricule': admin.a_matricule,
             }
 
         else:

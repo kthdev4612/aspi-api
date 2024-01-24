@@ -30,6 +30,7 @@ class Reports(db.Model):
     creation_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
     update_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
 
+
 class Admin(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     a_firstname = db.Column(db.String(128), nullable=False)
@@ -39,8 +40,15 @@ class Admin(db.Model):
     a_password = db.Column(db.String(128), nullable=False)
     a_number = db.Column(db.String(128), nullable=False)
     a_role = db.Column(db.String(128), nullable=False)
+    a_matricule = db.Column(db.String(128), nullable=False)
     a_country = db.Column(db.String(128), nullable=False)
-    a_image_data = db.Column(db.String(128), nullable=False)
     a_uid = db.Column(db.String(128))
+    creation_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
+    update_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
+
+class Arrive(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    a_Id = db.Column(db.Integer, db.ForeignKey(Admin.id) )
+    a_matricul = db.Column(db.String(255), nullable=False)
     creation_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
     update_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
