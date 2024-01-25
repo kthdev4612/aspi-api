@@ -5,6 +5,8 @@ from models.aspci_base import Users
 from flask import jsonify  
 import uuid
 import bcrypt
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 
 #la fonction qui permet de de creer un utilisateur 
@@ -29,8 +31,10 @@ def CreateUser():
         id = str(uuid.uuid4())
         matricule = "ASPCI_" + str(uuid.uuid4()).upper().replace('-', '')[:4]
 
+        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
 
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+        # hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
     
         #nouvelle instance de la classe user qui se trouve dans le dossier model
@@ -243,3 +247,60 @@ def GetSingleUser():
         response['error_description'] = str(e)
 
     return response
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def Login():
+    reponse = {}
+
+    try:
+        username = request.json.get('username')
+        matricule = request.json.get('matricule')
+        password = request.json.get('password')
+
+        user = Users.query.filter_by(u_username=username, u_matricule=matricule).first()
+
+        if user and check_password_hash(user.u_password, password):
+            reponse['status'] = 'success'
+            reponse['result'] = {
+                'id': user.u_uid,
+                'firstname': user.u_firstname,
+                'lastname': user.u_lastname,
+                'email': user.u_email,
+                'number': user.u_number,
+                'function': user.u_function,
+                'date of birth': user.u_date_of_birth,
+                'place of birth': user.u_place_of_birth,
+                'username': user.u_username,
+                'matricule': user.u_matricule,
+            }
+
+        else:
+            reponse['status'] = 'error'
+            reponse['error_description'] = 'Nom d\'utilisateur ou mot de passe incorrect.'
+
+    except Exception as e:
+        reponse['error_description'] = str(e)
+        reponse['status'] = 'error'
+
+    return reponse

@@ -18,6 +18,9 @@ class UsersApi(Resource):
         
         if route == "Updateuser":
             return UpdateUser()
+        
+        if route == "login":
+            return Login()
 
     # def delete(self, route):
     #     if route == "DeletedUser":
