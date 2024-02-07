@@ -8,9 +8,11 @@ from models.aspci_base import *
 from resources.users import UsersApi
 from resources.reports import ReportsApi
 from resources.admin import AdminApi
-from resources.arrive import ArriveApi
 from flask_cors import CORS
 from flask import request
+
+
+
 
 app = Flask(__name__)
 CORS(app)
@@ -20,15 +22,10 @@ app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = LIEN_BASE_DE_DONNEES
 app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False
 
-
 db.init_app(app)
 
 migrate = Migrate(app, db)
 api = Api(app)
-
-
-
-
 
 
 
@@ -41,7 +38,6 @@ def home():
 api.add_resource(UsersApi, '/api/user/<string:route>', endpoint='all_user', methods=['GET', 'POST', 'DELETE', 'PATCH'])
 api.add_resource(ReportsApi, '/api/report/<string:route>', endpoint='all_report', methods=['GET', 'POST', 'DELETE', 'PATCH'])
 api.add_resource(AdminApi, '/api/admin/<string:route>', endpoint='all_admin', methods=['GET', 'POST', 'DELETE', 'PATCH'])
-api.add_resource(ArriveApi, '/api/arrive/<string:route>', endpoint='all_arrive', methods=['GET', 'POST', 'DELETE', 'PATCH'])
 
 
 if __name__ == '__main__':

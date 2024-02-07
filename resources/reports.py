@@ -11,19 +11,19 @@ class ReportsApi(Resource):
             return createReport()
 
 
-    def delete(self, route):
-        if route == "DeletedRport":
-            return "true"
+    # def delete(self, route):
+    #     if route == "DeletedRport":
+    #         return "true"
     
 
-    def patch(self, route):
-        if route == "UpdateReport":
-            return "true"
+    # def patch(self, route):
+    #     if route == "UpdateReport":
+    #         return "true"
 
 
     def get(self, route):
         if route == "GetAllReport":
-            return "true"
+            return Getreport()
         
-        if route == 'GetSingleReport':
-            return "true"
+        # if route == 'GetSingleReport':
+        #     return "true"
