@@ -178,8 +178,8 @@ def GetUsers():
             # Parcourir tous les utilisateurs pour récupérer leurs informations
             for user in all_users:
                 user_info = {
-                    'user_id': user.id,
-                    'user_uid': user.u_uid,
+                    'id': user.id,
+                    'uid': user.u_uid,
                     'firstname': user.u_firstname,
                     'lastname': user.u_lastname,
                     'username': user.u_username,
@@ -221,8 +221,8 @@ def GetSingleUser():
         if user:
             # Créer un dictionnaire pour stocker les informations de l'utilisateur
             user_info = {
-                'user_id': user.id,
-                'user_uid': user.u_uid,
+                'id': user.id,
+                'uid': user.u_uid,
                 'firstname': user.u_firstname,
                 'lastname': user.u_lastname,
                 'username': user.u_username,
@@ -266,7 +266,8 @@ def Login():
         if user and check_password_hash(user.u_password, password):
             reponse['status'] = 'success'
             reponse['result'] = {
-                'id': user.u_uid,
+                'id': user.id,
+                'uid': user.u_uid,
                 'firstname': user.u_firstname,
                 'lastname': user.u_lastname,
                 'email': user.u_email,

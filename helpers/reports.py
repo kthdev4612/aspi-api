@@ -6,16 +6,23 @@ from models.aspci_base import Users
 from flask import jsonify  
 import uuid
 
-
 def createReport():
     response = {}
 
     try:
+
+
         comment = request.json.get('coment')
+        u_id = request.json.get('user_id')
+        u_matricule = request.json.get('user_matricule')
+        u_uid = request.json.get('user_uid')
 
         new_report = Reports()
 
         new_report.r_comment = comment
+        new_report.user_id = u_id
+        new_report.user_matricule = u_matricule
+        new_report.user_uid = u_uid
 
         try:
             #ajout de toutes les informations de l'utilisateur dans la base de donnée
@@ -49,8 +56,10 @@ def Getreport():
             for report in all_report:
                 report_info = {
                     'report_id': report.id,
-                    'user_id': report.user_Id,
+                    'user_id': report.user_id,
                     'comment': report.r_comment,
+                    'matricule': report.user_matricule,
+                    'uid': report.user_uid,
                     
                 }
                 report_information.append(report_info)

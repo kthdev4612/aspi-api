@@ -14,6 +14,7 @@ from flask import request
 
 
 
+
 app = Flask(__name__)
 CORS(app)
 
@@ -21,6 +22,8 @@ app.secret_key = os.urandom(24)
 app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = LIEN_BASE_DE_DONNEES
 app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False
+
+
 
 db.init_app(app)
 

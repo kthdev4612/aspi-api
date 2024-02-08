@@ -6,6 +6,7 @@ from helpers.reports import *
 
 
 class ReportsApi(Resource):
+    
     def post(self, route):
         if route == "CreateReport":
             return createReport()
