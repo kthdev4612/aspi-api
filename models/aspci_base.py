@@ -26,8 +26,10 @@ class Users(db.Model):
 
 class Reports(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_Id = db.Column(db.Integer, db.ForeignKey(Users.id) )
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     r_comment = db.Column(db.String(255), nullable=False)
+    user_matricule = db.Column(db.String(255), nullable=False)
+    user_uid = db.Column(db.String(255), nullable=False)
     creation_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
     update_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
 
@@ -49,7 +51,7 @@ class Admin(db.Model):
 
 class Arrive(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    a_Id = db.Column(db.Integer, db.ForeignKey(Admin.id) )
+    a_Id = db.Column(db.Integer, db.ForeignKey(Users.id) )
     a_matricul = db.Column(db.String(255), nullable=False)
     creation_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
     update_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)

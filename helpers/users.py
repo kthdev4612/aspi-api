@@ -6,12 +6,12 @@ from flask import jsonify
 import uuid
 # import bcrypt
 from werkzeug.security import generate_password_hash, check_password_hash
+from fileinput import filename
 
 
 
 #la fonction qui permet de de creer un utilisateur 
 def CreateUser():
-
     reponse = {}
 
     try:
@@ -31,6 +31,7 @@ def CreateUser():
         image = request.json.get('img_link')
         id = str(uuid.uuid4())
         matricule = "ASPCI_" + str(uuid.uuid4()).upper().replace('-', '')[:4]
+    
 
         hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
 
@@ -97,6 +98,7 @@ def UpdateUser():
             function = request.json.get('function')
             parents_name = request.json.get('parents_name')
             parents_number = request.json.get('parents_number')
+         
 
             # Mettre à jour les informations de l'utilisateur avec les nouvelles données
             update_user.u_firstname = firstname
@@ -178,8 +180,8 @@ def GetUsers():
             # Parcourir tous les utilisateurs pour récupérer leurs informations
             for user in all_users:
                 user_info = {
-                    'user_id': user.id,
-                    'user_uid': user.u_uid,
+                    'id': user.id,
+                    'uid': user.u_uid,
                     'firstname': user.u_firstname,
                     'lastname': user.u_lastname,
                     'username': user.u_username,
@@ -222,8 +224,8 @@ def GetSingleUser():
         if user:
             # Créer un dictionnaire pour stocker les informations de l'utilisateur
             user_info = {
-                'user_id': user.id,
-                'user_uid': user.u_uid,
+                'id': user.id,
+                'uid': user.u_uid,
                 'firstname': user.u_firstname,
                 'lastname': user.u_lastname,
                 'username': user.u_username,
@@ -254,25 +256,6 @@ def GetSingleUser():
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def Login():
     reponse = {}
 
@@ -286,7 +269,8 @@ def Login():
         if user and check_password_hash(user.u_password, password):
             reponse['status'] = 'success'
             reponse['result'] = {
-                'id': user.u_uid,
+                'id': user.id,
+                'uid': user.u_uid,
                 'firstname': user.u_firstname,
                 'lastname': user.u_lastname,
                 'email': user.u_email,
@@ -300,7 +284,7 @@ def Login():
 
         else:
             reponse['status'] = 'error'
-            reponse['error_description'] = 'Nom d\'utilisateur ou mot de passe incorrect.'
+            reponse['error_description'] = 'Veuillez verifier vos identifiants de connexion.'
 
     except Exception as e:
         reponse['error_description'] = str(e)
