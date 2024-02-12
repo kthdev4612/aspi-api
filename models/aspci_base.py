@@ -18,6 +18,7 @@ class Users(db.Model):
     u_matricule = db.Column(db.String(128), nullable=False)
     u_parents_name = db.Column(db.String(128), nullable=False)
     u_parents_number = db.Column(db.String(128), nullable=False)
+    u_img_link = db.Column(db.Text())
     u_uid = db.Column(db.String(128))
     creation_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
     update_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)

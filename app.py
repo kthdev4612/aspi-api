@@ -19,11 +19,13 @@ app.secret_key = os.urandom(24)
 app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = LIEN_BASE_DE_DONNEES
 app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 db.init_app(app)
 
-migrate = Migrate(app, db)
+migrate = Migrate(app, db)  
 api = Api(app)
 
 

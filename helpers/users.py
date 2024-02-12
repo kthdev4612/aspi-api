@@ -4,7 +4,7 @@ from config.db import db
 from models.aspci_base import Users
 from flask import jsonify  
 import uuid
-import bcrypt
+# import bcrypt
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -28,6 +28,7 @@ def CreateUser():
         function = request.json.get('function')
         parents_name = request.json.get('parents_name')
         parents_number = request.json.get('parents_number')
+        image = request.json.get('img_link')
         id = str(uuid.uuid4())
         matricule = "ASPCI_" + str(uuid.uuid4()).upper().replace('-', '')[:4]
 
@@ -55,6 +56,7 @@ def CreateUser():
         new_users.u_parents_number = parents_number
         new_users.u_uid = id
         new_users.u_matricule = matricule
+        new_users.u_img_link = image
 
         
           # Ajouter l'instance à la session et la sauvegarder dans la base de données
@@ -189,6 +191,7 @@ def GetUsers():
                     'parents_name' : user.u_parents_name,
                     'parents_number' : user.u_parents_number,
                     'matricule' : user.u_matricule,
+                    'image_link' : user.u_img_link,
                     # ... Ajoutez d'autres informations d'utilisateur si nécessaire
                 }
                 users_information.append(user_info)
