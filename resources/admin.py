@@ -12,3 +12,7 @@ class AdminApi(Resource):
         if route == "Login":
             return Login()
             
+    # def get(self, route):
+    #     if route == "GetAllUsers":
+    #         return GetUsers()
+        

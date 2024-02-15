@@ -48,9 +48,12 @@ class Admin(db.Model):
     creation_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
     update_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
 
-class Arrive(db.Model):
+class StatusReport(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    a_Id = db.Column(db.Integer, db.ForeignKey(Users.id) )
-    a_matricul = db.Column(db.String(255), nullable=False)
+    u_id = db.Column(db.Integer, db.ForeignKey('users.id') )
+    u_firstname = db.Column(db.String(255), nullable=False)
+    a_firstname = db.Column(db.String(255), nullable=False)
+    a_matricule = db.Column(db.String(255), nullable=False)
+    s_status = db.Column(db.String(255), nullable=False)
     creation_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
     update_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)

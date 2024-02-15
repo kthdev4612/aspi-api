@@ -9,9 +9,8 @@ from resources.users import UsersApi
 from resources.reports import ReportsApi
 from resources.admin import AdminApi
 from flask_cors import CORS
-from flask import request
-
-
+from flask import Request
+from resources.report_status import StatusReportsApi
 
 
 
@@ -41,6 +40,7 @@ def home():
 api.add_resource(UsersApi, '/api/user/<string:route>', endpoint='all_user', methods=['GET', 'POST', 'DELETE', 'PATCH'])
 api.add_resource(ReportsApi, '/api/report/<string:route>', endpoint='all_report', methods=['GET', 'POST', 'DELETE', 'PATCH'])
 api.add_resource(AdminApi, '/api/admin/<string:route>', endpoint='all_admin', methods=['GET', 'POST', 'DELETE', 'PATCH'])
+api.add_resource(StatusReportsApi, '/api/reportstatus/<string:route>', endpoint='all_report_status', methods=['GET', 'POST', 'DELETE', 'PATCH'])
 
 
 if __name__ == '__main__':
