@@ -75,3 +75,34 @@ def Getreport():
         response['error_description'] = str(e)
 
     return response
+
+
+
+
+def GetSingleReport():
+    response = {}
+
+    try:
+        id = request.json.get('id')
+        uid = request.json.get('u_uid')
+        report = Reports.query.filter_by(user_uid= uid, id=id).first()
+
+        if report:
+            report_info = {
+                'report_id': report.id,
+                'user_id': report.user_id,
+                'comment': report.r_comment,
+                
+                }
+
+            response['status'] = 'success'
+            response['result'] = report_info
+        else:
+            response['status'] = 'erreur'
+            response['message'] = f"Aucun rapport trouvé"
+
+    except Exception as e:
+        response['status'] = 'error'
+        response['error_description'] = str(e)
+
+    return response

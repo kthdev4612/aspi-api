@@ -73,7 +73,8 @@ def Login():
         if admin and check_password_hash(admin.a_password, password):
             reponse['status'] = 'success'
             reponse['result'] = {
-                'id': admin.a_uid,
+                'id': admin.id,
+                'uid': admin.a_uid,
                 'firstname': admin.a_firstname,
                 'lastname': admin.a_lastname,
                 'email': admin.a_email,

@@ -1,18 +1,18 @@
 from flask_restful import Resource
 import json
 from flask import request
-from helpers.reports import *
+from helpers.report_status import *
 
 
 
-class ReportsApi(Resource):
+class StatusReportsApi(Resource):
     
     def post(self, route):
-        if route == "CreateReport":
-            return createReport()
+        if route == "CreateReportStatus":
+            return createReportStatus()
         
-        if route == "getSingleReport":
-            return GetSingleReport()
+        # if route == "getSingleReport":
+        #     return GetSingleReport()
 
 
     # def delete(self, route):
@@ -26,8 +26,8 @@ class ReportsApi(Resource):
 
 
     def get(self, route):
-        if route == "GetAllReport":
-            return Getreport()
+        if route == "GetAllReportStatus":
+            return GetReportStatus()
         
         # if route == 'GetSingleReport':
         #     return "true"
