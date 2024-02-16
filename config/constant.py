@@ -1,1 +1,1 @@
-LIEN_BASE_DE_DONNEES = 'mysql+pymysql://root:@localhost/aspci'
+LIEN_BASE_DE_DONNEES = 'mysql+pymysql://root:@localhost/aspci_base'

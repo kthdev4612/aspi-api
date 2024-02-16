@@ -28,7 +28,7 @@ def CreateUser():
         function = request.json.get('function')
         parents_name = request.json.get('parents_name')
         parents_number = request.json.get('parents_number')
-        image = request.json.get('img_link')
+        chef_section = request.json.get('chef_section')
         id = str(uuid.uuid4())
         matricule = "ASPCI_" + str(uuid.uuid4()).upper().replace('-', '')[:4]
     
@@ -57,7 +57,7 @@ def CreateUser():
         new_users.u_parents_number = parents_number
         new_users.u_uid = id
         new_users.u_matricule = matricule
-        new_users.u_img_link = image
+        new_users.u_chef_section = chef_section
 
         
           # Ajouter l'instance à la session et la sauvegarder dans la base de données
@@ -98,6 +98,7 @@ def UpdateUser():
             function = request.json.get('function')
             parents_name = request.json.get('parents_name')
             parents_number = request.json.get('parents_number')
+            chef_section = request.json.get('chef_section')
          
 
             # Mettre à jour les informations de l'utilisateur avec les nouvelles données
@@ -111,6 +112,7 @@ def UpdateUser():
             update_user.u_function = function
             update_user.u_parents_name = parents_name
             update_user.u_parents_number = parents_number
+            update_user.u_chef_section = chef_section
 
             # Enregistrer les modifications dans la base de données
             try:
@@ -193,7 +195,7 @@ def GetUsers():
                     'parents_name' : user.u_parents_name,
                     'parents_number' : user.u_parents_number,
                     'matricule' : user.u_matricule,
-                    'image_link' : user.u_img_link,
+                    'chef_section_name' : user.u_chef_section,
                     # ... Ajoutez d'autres informations d'utilisateur si nécessaire
                 }
                 users_information.append(user_info)
@@ -237,6 +239,8 @@ def GetSingleUser():
                 'parents_name' : user.u_parents_name,
                 'parents_number' : user.u_parents_number,
                 'matricule' : user.u_matricule,
+                'chef_section_name' : user.u_chef_section,
+
 
                 # ... Ajoutez d'autres informations d'utilisateur si nécessaire
             }
@@ -280,6 +284,8 @@ def Login():
                 'place of birth': user.u_place_of_birth,
                 'username': user.u_username,
                 'matricule': user.u_matricule,
+                'chef_section_name' : user.u_chef_section,
+
             }
 
         else:
