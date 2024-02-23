@@ -10,6 +10,7 @@ from resources.reports import ReportsApi
 from resources.admin import AdminApi
 from resources.report_status import StatusReportsApi
 from resources.presence import PresenceApi
+from resources.heure import HeureApi
 from flask_cors import CORS
 from flask import Request
 
@@ -45,6 +46,7 @@ api.add_resource(ReportsApi, '/api/report/<string:route>', endpoint='all_report'
 api.add_resource(AdminApi, '/api/admin/<string:route>', endpoint='all_admin', methods=['GET', 'POST', 'DELETE', 'PATCH'])
 api.add_resource(StatusReportsApi, '/api/reportstatus/<string:route>', endpoint='all_report_status', methods=['GET', 'POST', 'DELETE', 'PATCH'])
 api.add_resource(PresenceApi, '/api/presence/<string:route>', endpoint='all_presence', methods=['GET', 'POST', 'DELETE', 'PATCH'])
+api.add_resource(HeureApi, '/api/heure/<string:route>', endpoint='all_heure', methods=['GET', 'POST', 'DELETE', 'PATCH'])
 
 
 if __name__ == '__main__':
