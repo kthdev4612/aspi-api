@@ -26,6 +26,7 @@ def CreateUser():
         place_of_birth = request.json.get('place_of_birth')
         number = request.json.get('number')
         function = request.json.get('function')
+        function_chef = request.json.get('chef_role')
         parents_name = request.json.get('parents_name')
         parents_number = request.json.get('parents_number')
         id = str(uuid.uuid4())
@@ -52,6 +53,7 @@ def CreateUser():
         new_users.u_place_of_birth = place_of_birth
         new_users.u_number = number
         new_users.u_function = function
+        new_users.u_role_chef = function_chef
         new_users.u_parents_name = parents_name
         new_users.u_parents_number = parents_number
         new_users.u_uid = id
@@ -188,6 +190,7 @@ def GetUsers():
                     'place_of_birth': user.u_place_of_birth,
                     'number' : user.u_number,
                     'function' : user.u_function,
+                    'chef_role' : user.u_role_chef,
                     'parents_name' : user.u_parents_name,
                     'parents_number' : user.u_parents_number,
                     'matricule' : user.u_matricule,
@@ -231,6 +234,7 @@ def GetSingleUser():
                 'place_of_birth': user.u_place_of_birth,
                 'number' : user.u_number,
                 'function' : user.u_function,
+                'chef_role' : user.u_role_chef,
                 'parents_name' : user.u_parents_name,
                 'parents_number' : user.u_parents_number,
                 'matricule' : user.u_matricule,
