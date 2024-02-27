@@ -11,6 +11,8 @@ class StatusReportsApi(Resource):
         if route == "CreateReportStatus":
             return createReportStatus()
         
+        if route == "GetReportStatus":
+            return GetReportStatus()
         # if route == "getSingleReport":
         #     return GetSingleReport()
 
@@ -27,7 +29,7 @@ class StatusReportsApi(Resource):
 
     def get(self, route):
         if route == "GetAllReportStatus":
-            return GetReportStatus()
+            return GetAllReportStatus()
         
         # if route == 'GetSingleReport':
         #     return "true"

@@ -18,11 +18,13 @@ def createReportStatus():
         agen_firstname = request.json.get('a_firstname')
         agent_matricule = request.json.get('a_matricule')
         id = request.json.get('u_id')
+        admin_id = request.json.get('admin_id')
         
 
         new_status = StatusReport()
 
         new_status.u_id = id
+        new_status.admin_id = admin_id
         new_status.u_firstname = firstname
         new_status.a_firstname = agen_firstname
         new_status.a_matricule = agent_matricule
@@ -35,7 +37,7 @@ def createReportStatus():
             db.session.rollback()
             print(f"Une erreur s'est produite : {str(e)}")
 
-        response['satus'] = 'success'
+        response['status'] = 'success'
 
     except Exception as e:
         response['error_description'] = str(e)
@@ -51,7 +53,38 @@ def GetReportStatus():
     response = {}
     
     try:
-        
+        a_id = request.json.get('admin_id')
+        all_reportSatus = StatusReport.query.filter_by(admin_id=a_id).all()
+
+        if all_reportSatus:
+            reportStatus_information = []
+
+            for report in all_reportSatus:
+                reportStatus_info = {
+                    'status': report.s_status,
+                    'matricule': report.a_matricule,
+                    'agent_firstname': report.a_firstname,
+                    'user_firstname': report.u_firstname,
+                    
+                }
+                reportStatus_information.append(reportStatus_info)
+
+            response['status'] = 'success'
+            response ['result'] = reportStatus_information
+        else:
+            response['status'] = 'error'
+            response['message'] = 'Aucun rapport trouvé dans la base de données.'
+
+    except Exception as e:
+        response['status'] = 'error'
+        response['error_description'] = str(e)
+
+    return response
+
+def GetAllReportStatus():
+    response = {}
+    
+    try:
         all_reportSatus = StatusReport.query.all()
 
         if all_reportSatus:

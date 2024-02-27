@@ -13,6 +13,9 @@ class ReportsApi(Resource):
         
         if route == "getSingleReport":
             return GetSingleReport()
+        
+        if route == "GetAllReport":
+            return Getreport()
 
 
     # def delete(self, route):
@@ -25,9 +28,9 @@ class ReportsApi(Resource):
     #         return "true"
 
 
-    def get(self, route):
-        if route == "GetAllReport":
-            return Getreport()
+    # def get(self, route):
+    #     if route == "GetAllReport":
+    #         return Getreport()
         
         # if route == 'GetSingleReport':
         #     return "true"

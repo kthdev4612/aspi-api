@@ -14,6 +14,7 @@ def createReport():
 
         comment = request.json.get('coment')
         u_id = request.json.get('user_id')
+        admin_id = request.json.get('admin_id')
         u_matricule = request.json.get('user_matricule')
         u_uid = request.json.get('user_uid')
 
@@ -21,6 +22,7 @@ def createReport():
 
         new_report.r_comment = comment
         new_report.user_id = u_id
+        new_report.admin_id = admin_id
         new_report.user_matricule = u_matricule
         new_report.user_uid = u_uid
 
@@ -47,8 +49,8 @@ def Getreport():
     response = {}
     
     try:
-        
-        all_report = Reports.query.all()
+        a_id = request.json.get('admin_id')
+        all_report = Reports.query.filter_by(admin_id=a_id).all()
 
         if all_report:
             report_information = []

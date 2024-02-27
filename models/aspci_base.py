@@ -43,6 +43,7 @@ class Users(db.Model):
 class Reports(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'))
     r_comment = db.Column(db.String(255), nullable=False)
     user_matricule = db.Column(db.String(255), nullable=False)
     user_uid = db.Column(db.String(255), nullable=False)
@@ -53,22 +54,13 @@ class Reports(db.Model):
 class StatusReport(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     u_id = db.Column(db.Integer, db.ForeignKey('users.id') )
+    admin_id = db.Column(db.Integer, db.ForeignKey('admin.id') )
     u_firstname = db.Column(db.String(255), nullable=False)
     a_firstname = db.Column(db.String(255), nullable=False)
     a_matricule = db.Column(db.String(255), nullable=False)
     s_status = db.Column(db.String(255), nullable=False)
     creation_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
     update_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
-
-
-# class Presence(db.Model):
-#     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-#     admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'))
-#     p_matricule = db.Column(db.String(255), nullable=False)
-#     p_firstname = db.Column(db.String(255), nullable=False)
-#     p_lastname = db.Column(db.String(255), nullable=False)
-#     creation_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
-#     update_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
 
 
 class PresenceMatinale(db.Model):
