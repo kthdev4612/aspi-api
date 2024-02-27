@@ -22,6 +22,8 @@ class UsersApi(Resource):
         if route == "login":
             return Login()
 
+        if route == "getUserByAdminId":
+                return getUserByAdminId()
     # def delete(self, route):
     #     if route == "DeletedUser":
     #         return DeleteUser()

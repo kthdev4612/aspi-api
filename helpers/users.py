@@ -27,6 +27,7 @@ def CreateUser():
         number = request.json.get('number')
         function = request.json.get('function')
         function_chef = request.json.get('chef_role')
+        admin_id = request.json.get('admin_id')
         parents_name = request.json.get('parents_name')
         parents_number = request.json.get('parents_number')
         id = str(uuid.uuid4())
@@ -54,6 +55,7 @@ def CreateUser():
         new_users.u_number = number
         new_users.u_function = function
         new_users.u_role_chef = function_chef
+        new_users.admin_id = admin_id
         new_users.u_parents_name = parents_name
         new_users.u_parents_number = parents_number
         new_users.u_uid = id
@@ -191,6 +193,7 @@ def GetUsers():
                     'number' : user.u_number,
                     'function' : user.u_function,
                     'chef_role' : user.u_role_chef,
+                    'admin_id' : user.admin_id,
                     'parents_name' : user.u_parents_name,
                     'parents_number' : user.u_parents_number,
                     'matricule' : user.u_matricule,
@@ -200,6 +203,53 @@ def GetUsers():
 
             response['status'] = 'success'
             response ['result'] = users_information
+        else:
+            response['status'] = 'error'
+            response['message'] = 'Aucun utilisateur trouvé dans la base de données.'
+
+    except Exception as e:
+        response['status'] = 'error'
+        response['error_description'] = str(e)
+
+    return response
+
+
+
+
+def getUserByAdminId():
+    response = {}
+    
+    try:
+        a_id = request.json.get('admin_id')
+        users = Users.query.filter_by(admin_id=a_id).all()
+
+        if users:
+            users_information = []
+
+            # Parcourir tous les utilisateurs pour récupérer leurs informations
+            for user in users:
+                user_info = {
+                    'id': user.id,
+                    'uid': user.u_uid,
+                    'firstname': user.u_firstname,
+                    'lastname': user.u_lastname,
+                    'username': user.u_username,
+                    'email': user.u_email,
+                    'date_of_birth': user.u_date_of_birth,
+                    'place_of_birth': user.u_place_of_birth,
+                    'number': user.u_number,
+                    'function': user.u_function,
+                    'chef_role': user.u_role_chef,
+                    'admin_id': user.admin_id,
+                    'parents_name': user.u_parents_name,
+                    'parents_number': user.u_parents_number,
+                    'matricule': user.u_matricule,
+                    # ... Ajoutez d'autres informations d'utilisateur si nécessaire
+                }
+                users_information.append(user_info)
+
+            response['status'] = 'success'
+            response['result'] = users_information
         else:
             response['status'] = 'error'
             response['message'] = 'Aucun utilisateur trouvé dans la base de données.'
@@ -235,6 +285,7 @@ def GetSingleUser():
                 'number' : user.u_number,
                 'function' : user.u_function,
                 'chef_role' : user.u_role_chef,
+                'admin_id' : user.admin_id,
                 'parents_name' : user.u_parents_name,
                 'parents_number' : user.u_parents_number,
                 'matricule' : user.u_matricule,
@@ -278,6 +329,8 @@ def Login():
                 'email': user.u_email,
                 'number': user.u_number,
                 'function': user.u_function,
+                'chef_role' : user.u_role_chef,
+                'admin_id' : user.admin_id,
                 'date of birth': user.u_date_of_birth,
                 'place of birth': user.u_place_of_birth,
                 'username': user.u_username,

@@ -1,32 +1,31 @@
 import json
 from flask import request
 from config.db import db
-from models.aspci_base import Presence
+from models.aspci_base import PresenceMatinale
 from flask import jsonify  
 
 
-
-
-def CreatePresence():
+def CreatePresencematinale():
     reponse = {}
 
     try:
+
         firstname = request.json.get('p_firstname')
         lastname = request.json.get('p_lastname')
         matricule = request.json.get('p_matricule')
-        # admin_id = request.json.get('admin_id')
-    
+        admin_id = request.json.get('admin_id')
 
-        new_presence = Presence()
+        new_presence = PresenceMatinale()
 
         new_presence.p_firstname = firstname
         new_presence.p_lastname = lastname
         new_presence.p_matricule = matricule
-        # new_presence.admin_id = admin_id
+        new_presence.admin_id = admin_id
+
         try:
             db.session.add(new_presence)
             db.session.commit()
-            print("La presence a été enregistrée avec succès !")
+            # print("Les informations de l'utilisateurs ont été enregistrées avec succès !")
         except Exception as e:
             db.session.rollback()
             print(f"Une erreur s'est produite : {str(e)}")
@@ -40,14 +39,12 @@ def CreatePresence():
     return reponse
 
 
-
-
-def getPresence():
+def getPresenceMatinale():
     response = {}
     
     try:
         a_id = request.json.get('admin_id')
-        all_presence = Presence.query.filter_by(admin_id=a_id).all()
+        all_presence = PresenceMatinale.query.filter_by(admin_id=a_id).all()
 
         if all_presence:
             information = []

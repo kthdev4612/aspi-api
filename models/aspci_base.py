@@ -4,8 +4,24 @@ from sqlalchemy.sql import expression
 import uuid
 
 
+class Admin(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    a_firstname = db.Column(db.String(128), nullable=False)
+    a_lastname = db.Column(db.String(128), nullable=False)
+    a_username = db.Column(db.String(128), nullable=False)
+    a_email = db.Column(db.String(128), nullable=False)
+    a_password = db.Column(db.String(128), nullable=False)
+    a_number = db.Column(db.String(128), nullable=False)
+    a_role = db.Column(db.String(128), nullable=False)
+    a_matricule = db.Column(db.String(128), nullable=False)
+    a_country = db.Column(db.String(128), nullable=False)
+    a_uid = db.Column(db.String(128))
+    creation_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
+    update_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
+
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'))
     u_firstname = db.Column(db.String(128), nullable=False)
     u_lastname = db.Column(db.String(128), nullable=False)
     u_username = db.Column(db.String(128), nullable=False)
@@ -34,21 +50,6 @@ class Reports(db.Model):
     update_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
 
 
-class Admin(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    a_firstname = db.Column(db.String(128), nullable=False)
-    a_lastname = db.Column(db.String(128), nullable=False)
-    a_username = db.Column(db.String(128), nullable=False)
-    a_email = db.Column(db.String(128), nullable=False)
-    a_password = db.Column(db.String(128), nullable=False)
-    a_number = db.Column(db.String(128), nullable=False)
-    a_role = db.Column(db.String(128), nullable=False)
-    a_matricule = db.Column(db.String(128), nullable=False)
-    a_country = db.Column(db.String(128), nullable=False)
-    a_uid = db.Column(db.String(128))
-    creation_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
-    update_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
-
 class StatusReport(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     u_id = db.Column(db.Integer, db.ForeignKey('users.id') )
@@ -60,11 +61,23 @@ class StatusReport(db.Model):
     update_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
 
 
-class Presence(db.Model):
+# class Presence(db.Model):
+#     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+#     admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'))
+#     p_matricule = db.Column(db.String(255), nullable=False)
+#     p_firstname = db.Column(db.String(255), nullable=False)
+#     p_lastname = db.Column(db.String(255), nullable=False)
+#     creation_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
+#     update_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
+
+
+class PresenceMatinale(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'))
     p_matricule = db.Column(db.String(255), nullable=False)
     p_firstname = db.Column(db.String(255), nullable=False)
     p_lastname = db.Column(db.String(255), nullable=False)
     creation_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
     update_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
+
 
