@@ -29,7 +29,6 @@ def createReportStatus():
         new_status.s_status = status
 
         try:
-            #ajout de toutes les informations de l'utilisateur dans la base de donnée
             db.session.add(new_status)
             db.session.commit()
         except Exception as e:
@@ -43,6 +42,7 @@ def createReportStatus():
         response['status'] = 'error'
 
     return response
+
 
 
 

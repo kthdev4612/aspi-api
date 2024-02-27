@@ -67,7 +67,3 @@ class Presence(db.Model):
     creation_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
     update_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
 
-class Heure(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    h_heure_debut = db.Column(db.String(255), nullable=False)
-    h_heure_fin = db.Column(db.String(255), nullable=False)
